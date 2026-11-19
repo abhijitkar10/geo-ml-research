@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+.DS_Store
+# raw and derived netCDF live on the Dell only
+albedo/data/
+# run logs, locks and markers from the Dell
+logs/
+# superseded draft backups
+paper/draft.pre-*.md
+# LaTeX build by-products
+paper/latex/*.aux
+paper/latex/*.log
+paper/latex/*.out
+paper/latex/*.bbl
+paper/latex/*.blg
+paper/latex/copernicus_pkg/
