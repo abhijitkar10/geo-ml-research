@@ -2,6 +2,8 @@
 
 **Question:** Earth reflects less sunlight than it did in 2000, mostly because low clouds reflect less. Cleaner air elsewhere is one proposed cause. Over the northern Indian Ocean (Arabian Sea, Bay of Bengal), aerosol pollution *rose* over 2003–2024. Did that rise brighten the region's low clouds?
 
+**Repository:** https://github.com/abhijitkar10/geo-ml-research (public). Raw data are not in it; `albedo/download.py` fetches them.
+
 **Current answer (2026-11-09):** no detectable effect.
 - **The bound.** The anthropogenic-aerosol term in low-cloud reflection is within ±0.05 W m⁻² per decade (2σ) in both regions. Two aerosol reanalyses (MERRA-2, CAMS) and every model variant agree.
 - **Droplet number is asymmetric.** It fell where aerosol fell (NE Pacific, East China Sea) but didn't rise where it rose.

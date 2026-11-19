@@ -2,6 +2,9 @@
 
 Newest first. One entry per change that moves a result, adds an analysis, or changes how things run. Detail lives in [paper/draft.md](paper/draft.md) (Appendix A = full analysis log) and [paper/plan.md](paper/plan.md).
 
+## 2026-11-20
+- **Public repo:** https://github.com/abhijitkar10/geo-ml-research (code, result CSVs and figures, paper, docs). Left out: `.venv/`, `albedo/data/` (raw netCDF, Dell only), `logs/`, old draft backups, the duplicate Copernicus template bundle.
+
 ## 2026-11-09
 - **Number audit, rest:** droplet-gap regressions recomputed from the cell CSVs, and all reproduce (only change: the non-monsoon gap error is ±0.09, not ±0.08). Table 4 reproduces exactly (2003–2022, area-weighted region-mean AOD, slope/mean); new `albedo/aod_trends.py` regenerates it. **Fixed:** the abstract, §4.2 and §5 paired Table 4's 2003–2022 sulphate trends with the 2003–2024 headline period. Over 2003–2024, Arabian Sea sulphate rose about 16 % per decade (not 14 %) and NE Pacific sulphate fell about 8 % (not 10 %). Shipping: the weather-removed Aqua droplet-number range is −0.09 to −1.11 (lower end was −0.13); all z-scores and bootstrap values check out. The 15–25 % sulphate share of the droplet declines is confirmed (16 % NE Pacific, 23 % East China Sea). "About −2 %" confirmed: the lane mean (84 cells, 2015–2019) is 28.1 cm⁻³, so −0.59 is −2.1 %. PDF rebuilt.
 - **Number audit (± pairs):** every `a ± b` in the main text checked against (trend, err) / (did, boot_2sd) rows in all result CSVs. Two rounding slips fixed: NE Pacific ridge sulphate term −0.27 ± 0.36 (was ± 0.35, 3 places); Arabian Sea high-cloud sulphate −0.32 ± 0.37 (was ± 0.38). No quoted error was the bootstrap-only `err_boot`. Not yet audited: percentages and the gap-regression numbers (not stored in CSVs). Script: scratchpad `audit.py`.
