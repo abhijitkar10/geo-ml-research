@@ -1,25 +1,26 @@
 # Status: done, running, next
 
-*Last updated 2026-11-09 10:04 IST (Dell clock). Living page: updated whenever a job starts or finishes or a result lands. Dated history is in [CHANGELOG.md](CHANGELOG.md); the work-package view is in [paper/plan.md](paper/plan.md).*
+*Last updated 2026-11-23 00:10 IST (Mac clock: the Dell was unreachable over LAN and Tailscale). Living page: updated whenever a job starts or finishes or a result lands. Dated history is in [CHANGELOG.md](CHANGELOG.md); the work-package view is in [paper/plan.md](paper/plan.md).*
 
 ## Running now
 | what | where | started | output | expected |
 |---|---|---|---|---|
-| Main pipeline (cron, every 20 min): idle, last full run 02:14 | Dell, `logs/pipeline.log` | — | `albedo/results/` | reruns on new data or `touch logs/rerun.request` |
+| Main pipeline (cron, every 20 min): state unknown, Dell unreachable on 2026-11-23; last known idle, full run 2026-11-09 02:14 | Dell, `logs/pipeline.log` | — | `albedo/results/` | reruns on new data or `touch logs/rerun.request` |
 | Download jobs (cron): idle unless new CERES/ERA5/CAMS months appear | Dell, `logs/*.log` | — | `albedo/data/` | — |
 | Mac sync of results and logs (launchd, every 30 min) | Mac | — | `albedo/results/`, `logs/` | — |
 
 ## Next (in order)
 1. **ACP submission prep** (target: *Atmospheric Chemistry and Physics*; checklist in `paper/acp_submission.md`):
-   - me: nothing left on the manuscript build. Author lists are complete, citations are natbib `\citealp`/`\citet`, and every reference is verified and cited.
-   - **you:** authors and affiliations, author contributions, the AI-use statement in your words, funding, Zenodo DOIs for code and data, a fresh-eyes read-through.
+   - me: done. Dataset DOIs (11), consistency pass, graphical abstract, `.zenodo.json` / `CITATION.cff` / `LICENSE` are in; the PDF builds with no warnings beyond underfull boxes.
+   - **you:** authors and affiliations, author contributions, the AI-use statement in your words, competing interests, funding, licence choice (MIT set), Zenodo release + DOI, ACP upload and EGUsphere preprint, a fresh-eyes read-through.
+   - optional, needs the Dell: rerun the CAMS model on Aqua droplet number (`nd_aqua`), so §4.3's CAMS East China Sea term (now quoted as Terra) can use Aqua like everything else.
 2. **Parked:**
    - WP13 (winter Arabian Sea mechanism): not robust to CAMS.
    - WP8 (Model B's role): decided. It's a robustness row; detrended B agrees with the ridge.
 
 ## Done
 **Headline results** (draft §4):
-- No detectable aerosol effect on northern Indian Ocean low-cloud reflection: within ±0.05 W m⁻² per decade.
+- No detectable aerosol effect on northern Indian Ocean low-cloud reflection: +0.00 to +0.03 W m⁻² per decade, 2σ upper bound 0.07 (was quoted as ±0.05 until 2026-11-23).
   - It's robust across 9 model variants, MERRA-2 and CAMS, and the nonlinear model.
   - SYN1deg low-cloud reflectance agrees: +0.02 ± 0.02 and +0.01 ± 0.01.
 - The Ceppi-style sulphate signal in total cloud reflection is confounded. It sits in high cloud, isn't significant with the bootstrap, and flips sign between reanalyses.
@@ -53,7 +54,7 @@
 
 **Manuscript PDF:** `paper/latex/manuscript.pdf` (Copernicus template, compiles cleanly).
 
-**Paper (ACP format):** title, 248-word abstract, introduction, Conclusions §6, availability and declaration sections, consistency read-through, discussion §5.1–5.5, figure captions, methods (including the bootstrap, susceptibility, shipping DiD and robustness sources, §3.5–3.8), paper-order results with robustness table, Appendix A analysis log, and 16 verified references.
+**Paper (ACP format):** title, 250-word abstract, introduction, Conclusions §6, availability and declaration sections, consistency read-through, discussion §5.1–5.5, figure captions, methods (including the bootstrap, susceptibility, shipping DiD and robustness sources, §3.5–3.8), paper-order results with robustness table, Appendix A analysis log, and 28 verified references (17 literature, 11 data sets with DOIs).
 
 **Docs:** [README.md](README.md) (entry point), [CHANGELOG.md](CHANGELOG.md), this page, [paper/analysis_log.md](paper/analysis_log.md), [paper/acp_submission.md](paper/acp_submission.md).
 

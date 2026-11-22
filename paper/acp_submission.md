@@ -12,19 +12,21 @@ The study addresses aerosol–cloud interactions and their role in Earth's recen
 3. It quantifies a region-specific suppression of droplet-number susceptibility against two other regions, with a second, geostationary retrieval over 2003–2014.
 
 ## Abstract
-Use the "Abstract" section of `draft.md` (248 words; ACP limit 250).
+Use the "Abstract" section of `draft.md` (250 words; ACP limit 250).
 
 ## Checklist (what ACP needs at submission)
 - [x] Abstract ≤ 250 words, no citations
 - [x] Numbered sections (≤ 3 levels), Introduction … Conclusions
 - [x] Code availability, Data availability, Author contributions, Competing interests, Acknowledgements (with AI-use statement), Financial support sections. Placeholders marked [Author: …] must be filled by the author.
 - [x] In-text citation style "(Smith et al., 2009)"
-- [x] Manuscript in the Copernicus LaTeX template: `paper/latex/manuscript.tex` → `manuscript.pdf` (22 pages, line numbers), generated from `draft.md` by `paper/latex/build_tex.py`, compiled with `tectonic manuscript.tex`. All figures and tables are cited and every cross-reference resolves. In-text citations become natbib `\citealp`/`\citet` in the build.
-- [x] Reference list in Copernicus format with full author lists (taken from Crossref for the DOI entries; NeurIPS pages verified). All 17 are cited in the text.
-- [ ] Dataset DOIs in the reference list (author: add from each archive's citation page). Derived data and plot data deposited on Zenodo with a DOI.
-- [ ] Code archived on Zenodo with a DOI
+- [x] Manuscript in the Copernicus LaTeX template: `paper/latex/manuscript.tex` → `manuscript.pdf` (24 pages, line numbers), generated from `draft.md` by `paper/latex/build_tex.py`, compiled with `tectonic manuscript.tex`. All figures and tables are cited and every cross-reference resolves. In-text citations become natbib `\citealp`/`\citet` in the build.
+- [x] Reference list in Copernicus format with full author lists (taken from Crossref for the DOI entries; NeurIPS pages verified). All 28 are cited in the text.
+- [x] Dataset DOIs in the reference list: all 11 input data sets (CERES ×6, MERRA-2, ERA5 ×2, CAMS EAC4, EDGAR v8.1), each from the archive's own metadata or citation text and checked to resolve via doi.org; cited in Table 1 and Data availability.
+- [x] Zenodo metadata ready: `.zenodo.json`, `CITATION.cff`, MIT `LICENSE` (change the licence now if you prefer another; it is hard to change after the DOI is minted).
+- [ ] **Author:** link the GitHub repo to Zenodo, make a release, insert the code + derived-data DOI in Code availability and Data availability (both say [Author: insert …]).
 - [x] Figures: separate files f01–f04 + fS1 in `paper/figures/`; 300 dpi; (a), (b) panel labels; colour-vision-safe colours (Okabe–Ito; blue–orange; RdBu diverging maps); units as W m⁻²; all < 0.5 MB
 - [x] Remove the internal "(A.n)" cross-references: done automatically in the LaTeX build (`draft.md` keeps them for traceability)
-- [ ] Title page: authors, affiliations, correspondence email
-- [ ] Funding sources (entered at registration)
-- [ ] Optional: a graphical abstract (key figure). Candidate: Fig. 2, the cloud type × region panel.
+- [ ] **Author:** title page: authors, affiliations, correspondence email; author contributions; AI-use statement in your words; competing-interests confirmation
+- [ ] **Author:** funding sources (Financial support section, and at registration)
+- [ ] **Author:** upload to ACP (and post the EGUsphere preprint)
+- [x] Graphical abstract: `paper/figures/graphical_abstract.png` (Fig. 2 reduced to low vs high cloud × rising vs falling regions; `python3 albedo/figures.py graphical`).

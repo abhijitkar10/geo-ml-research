@@ -2,6 +2,13 @@
 
 Newest first. One entry per change that moves a result, adds an analysis, or changes how things run. Detail lives in [paper/draft.md](paper/draft.md) (Appendix A = full analysis log) and [paper/plan.md](paper/plan.md).
 
+## 2026-11-23
+- **Dataset DOIs:** all 11 input data sets are in the reference list and cited in Table 1 and Data availability (CERES EBAF-TOA, SSF1deg Terra/Aqua, FluxByCldTyp Terra–Aqua and NOAA-20, SYN1deg Ed4B; MERRA-2 M2TMNXAER; ERA5 monthly single and pressure levels; CAMS EAC4 monthly; EDGAR v8.1). DOIs from NASA CMR / Earthdata, the CDS/ADS catalogue citation text and the JRC data catalogue; each resolves. `build_tex.py` handles organisation authors and 2026a-style suffixes. 28 references, all cited.
+- **Consistency pass (fixes):** the headline bound was stated as "within ±0.05"; the 2σ upper bound is 0.07 (CAMS Arabian Sea +0.02 ± 0.05), so it now reads "+0.00 to +0.03, below 0.07 at 2σ" (abstract, §4.2, Fig. 2 caption, §5.1, Conclusions). Table 5 MERRA-2 NE Pacific median S is +0.09 (+0.13 was the cleanest octile). CAMS octile range starts at +0.18. §4.3's CAMS East China Sea droplet term (−1.92 ± 0.82) is from Terra `nd`, now labelled. §5.2 now limits the SYN1deg reproduction to 2003–2014. Conclusions no longer quote "10–17 % by species". Every Table 2/3 row and quoted ± pair re-checked against the CSVs (`err`, never `err_boot`). Abstract 250 words.
+- **Graphical abstract:** `paper/figures/graphical_abstract.png` (`figures.py graphical`).
+- **Zenodo prep:** `.zenodo.json`, `CITATION.cff`, MIT `LICENSE`.
+- PDF rebuilt: 24 pages, no overfull boxes, no undefined references.
+
 ## 2026-11-20
 - **Public repo:** https://github.com/abhijitkar10/geo-ml-research (code, result CSVs and figures, paper, docs). Left out: `.venv/`, `albedo/data/` (raw netCDF, Dell only), `logs/`, old draft backups, the duplicate Copernicus template bundle.
 

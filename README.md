@@ -4,8 +4,8 @@
 
 **Repository:** https://github.com/abhijitkar10/geo-ml-research (public). Raw data are not in it; `albedo/download.py` fetches them.
 
-**Current answer (2026-11-09):** no detectable effect.
-- **The bound.** The anthropogenic-aerosol term in low-cloud reflection is within ±0.05 W m⁻² per decade (2σ) in both regions. Two aerosol reanalyses (MERRA-2, CAMS) and every model variant agree.
+**Current answer (2026-11-23):** no detectable effect.
+- **The bound.** The anthropogenic-aerosol term in low-cloud reflection is +0.00 to +0.03 W m⁻² per decade in both regions, with a 2σ upper bound of 0.07. Two aerosol reanalyses (MERRA-2, CAMS) and every model variant agree.
 - **Droplet number is asymmetric.** It fell where aerosol fell (NE Pacific, East China Sea) but didn't rise where it rose.
 - **Low susceptibility.** The droplet response to aerosol is near zero there, even at fixed loading, stability, cloud amount, aerosol composition and season.
 
@@ -58,7 +58,7 @@ Mac launchd (com.abhijit.albedo-sync, every 30 min)
 | `susceptibility.py` | Per-cell droplet-number susceptibility S = d ln N_d / d ln AOD, plus each cell's regime and composition. `SUSC_MONTHS=` and `SUSC_CFHALF=1` restrict the months used. `SUSC_ND=nd_syn` swaps in SYN1deg droplet number, and `SUSC_UNTIL=2014` cuts the record. | `susceptibility_cells_*.csv`, `_bins_*.csv` |
 | `report.py` | Turns the results into `results/summary.md` and per-target figures | `summary.md`, `fig_<target>_<region>.png` |
 | `explain.py` | A plain-language digest of `summary.md` written by a free LLM via the FreeLLMAPI gateway (Tailscale only). Machine-written: check its numbers. | `summary_explained.md` |
-| `figures.py` | Main-text paper figures, from the CSVs only (runs on the Mac; the event study uses the Aqua `res_*_aqua` columns). `figures.py export` copies the final set to `paper/figures/f01…`. `susceptibility.py fig` and `trendmap.py fig` redraw their figures without refitting (Dell). | `fig_paper_{cloudtype,shipping_event,terra_aqua}.png` |
+| `figures.py` | Main-text paper figures, from the CSVs only (runs on the Mac; the event study uses the Aqua `res_*_aqua` columns). `figures.py export` copies the final set to `paper/figures/f01…`; `figures.py graphical` draws `paper/figures/graphical_abstract.png`. `susceptibility.py fig` and `trendmap.py fig` redraw their figures without refitting (Dell). | `fig_paper_{cloudtype,shipping_event,terra_aqua}.png` |
 | `trendmap.py` | Per-cell trend maps (needs gridded data, so it runs on the Dell) | `trendmap.nc`, `fig_paper_trendmap.png` |
 | `aod_trends.py` | Species AOD trends by region, % per decade (Table 4). Dell only. | stdout |
 | `syn.py` | Reduces SYN1deg (diurnally sampled) to the low-cloud layer. `load()` exposes it as the `*_syn` targets. | `data/syn/syn_low.nc`; check runs go to `results_syn/` |
