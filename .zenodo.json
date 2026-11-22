@@ -1,0 +1,17 @@
+{
+  "title": "Code and derived data for: Rising South Asian aerosol left no detectable imprint on northern Indian Ocean low clouds (2003–2024)",
+  "upload_type": "software",
+  "description": "Analysis code (data download, per-cell ridge and LightGBM cloud-controlling-factor attribution, year-block bootstrap, droplet-number susceptibility, IMO 2020 shipping-lane difference-in-differences, figures), result tables and figures for a study of whether rising aerosol over the Arabian Sea and Bay of Bengal brightened low clouds over 2003–2024. Raw inputs (CERES, MERRA-2, ERA5, CAMS EAC4, EDGAR v8.1) are public and fetched by albedo/download.py; they are not included.",
+  "creators": [
+    {
+      "name": "Kar, Abhijit",
+      "affiliation": "National Institute of Technology Karnataka, Surathkal, India"
+    }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": ["aerosol–cloud interactions", "low clouds", "Earth's albedo", "northern Indian Ocean", "CERES", "MERRA-2", "cloud-controlling factors", "IMO 2020"],
+  "related_identifiers": [
+    {"identifier": "https://github.com/abhijitkar10/geo-ml-research", "relation": "isSupplementTo", "scheme": "url"}
+  ]
+}

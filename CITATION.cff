@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this code or its results, please cite it as below."
+title: "Code and derived data for: Rising South Asian aerosol left no detectable imprint on northern Indian Ocean low clouds (2003–2024)"
+type: software
+authors:
+  - family-names: Kar
+    given-names: Abhijit
+    affiliation: "National Institute of Technology Karnataka, Surathkal, India"
+license: MIT
+repository-code: "https://github.com/abhijitkar10/geo-ml-research"
+keywords:
+  - aerosol–cloud interactions
+  - low clouds
+  - northern Indian Ocean
+  - CERES
+  - cloud-controlling factors
