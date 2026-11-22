@@ -3,7 +3,7 @@
 *Working draft, 2026-11-09. Sections 2–3 describe the code as written (`albedo/`; see the repository README). Every number in §4 traces to `albedo/results*/`; cross-references written (A.n) point to the chronological analysis log in `paper/analysis_log.md` and will be removed before submission. References marked ✓ were checked against the source; any remaining [verify] still needs checking.*
 
 ## Abstract
-Earth has reflected less sunlight since 2000, largely through dimmer low clouds; falling aerosol pollution is one proposed cause. If the cloud response to aerosol were symmetric, regions where pollution rose should have brightened. We test this over the northern Indian Ocean, where sulphate aerosol optical depth rose by about 16 % per decade over 2003–2024. We attribute trends in satellite cloud reflection, split by cloud type, and in Aqua-MODIS droplet number. The attribution uses per-grid-cell regression and gradient-boosted models with meteorological and air-mass controls, two aerosol reanalyses, and a year-block bootstrap of the fitted sensitivities. The anthropogenic aerosol contribution to the low-cloud reflection trend is within ±0.05 W m⁻² per decade (2σ) over both the Arabian Sea and the Bay of Bengal, robust across thirteen model and data variants. A negative sulphate term in total cloud reflection, as returned by a sulphate-only linear model, resides in high cloud, loses significance once sensitivity uncertainty is included, and reverses sign between reanalyses. It reflects meteorological confounding. Droplet number fell significantly where aerosol fell (northeast Pacific, East China Sea) but did not rise where it rose. Droplet-number susceptibility to aerosol is near zero over the northern Indian Ocean: 0.15–0.23 lower than elsewhere at equal aerosol loading, stability, cloud amount, aerosol composition and season, and reproduced by a geostationary retrieval over 2003–2014. A shipping-lane analysis of the 2020 fuel-sulphur limit finds at most a small droplet response. Aerosol increases therefore do not offset the darkening from aerosol decreases elsewhere one for one.
+Earth has reflected less sunlight since 2000, largely through dimmer low clouds; falling aerosol pollution is one proposed cause. If the cloud response to aerosol were symmetric, regions where pollution rose should have brightened. We test this over the northern Indian Ocean, where sulphate aerosol optical depth rose by about 16 % per decade over 2003–2024. We attribute trends in satellite cloud reflection, split by cloud type, and in Aqua-MODIS droplet number. The attribution uses per-grid-cell regression and gradient-boosted models with meteorological and air-mass controls, two aerosol reanalyses, and a year-block bootstrap of the fitted sensitivities. The anthropogenic aerosol contribution to the low-cloud reflection trend is +0.00 to +0.03 W m⁻² per decade, below 0.07 at 2σ, over both the Arabian Sea and Bay of Bengal, and robust across thirteen model–data variants. A negative sulphate term in total cloud reflection, as returned by a sulphate-only linear model, resides in high cloud, loses significance once sensitivity uncertainty is included, and reverses sign between reanalyses, reflecting meteorological confounding. Droplet number fell significantly where aerosol fell (northeast Pacific, East China Sea) but did not rise where it rose. Droplet-number susceptibility to aerosol is near zero over the northern Indian Ocean: 0.15–0.23 lower than elsewhere at equal aerosol loading, stability, cloud amount, aerosol composition and season, and reproduced by a geostationary retrieval over 2003–2014. A shipping-lane analysis of the 2020 fuel-sulphur limit finds at most a small droplet response. Aerosol increases therefore do not offset the darkening from aerosol decreases elsewhere one for one.
 
 ## 1. Introduction
 
@@ -135,7 +135,7 @@ All series are deseasonalised by removing each cell's monthly climatology. That 
 - **The bound.** Over 2003–2024, Arabian Sea sulphate AOD rose about 16 % per decade (14 % over 2003–2022, Table 4). The anthropogenic aerosol term (sulphate + BC + OC) in low-cloud reflection is:
   - Arabian Sea: +0.00 ± 0.06 W m⁻² per decade (MERRA-2), +0.02 ± 0.05 (CAMS);
   - Bay of Bengal: +0.02 ± 0.05 and +0.03 ± 0.03.
-  - So any effect is smaller than about 0.05 W m⁻² per decade (2σ, bootstrap), 10× tighter than the NE Pacific bound (Fig. `fig_paper_cloudtype`; A.11, A.15).
+  - So any effect is smaller than about 0.07 W m⁻² per decade (2σ upper bound, bootstrap included), an order of magnitude below the NE Pacific bound (Fig. `fig_paper_cloudtype`; A.11, A.15).
 - **Robustness across model variants and aerosol datasets** (Table 2; anthropogenic term in low-cloud reflection, W m⁻² per decade, 2σ; † = bootstrap included):
 
 | model | aerosol | Arabian Sea | Bay of Bengal |
@@ -183,18 +183,18 @@ Observed Aqua droplet-number trends are in Table 3, and their spatial pattern, a
 | East China Sea | −10 | −19 | −12 | −19 |
 
   In the NE Pacific, organic carbon rose while sulphate fell, most likely from North American wildfire smoke. That's consistent with rising wildfire carbonaceous aerosol, alongside falling sulphate, at rural sites in the US Northwest (McClure and Jaffe, 2018), though that study covers land sites, not the ocean. So the "anthropogenic" sum (sulphate + BC + OC) mixes a falling industrial signal with a rising wildfire one there, and sulphate alone is the clean NE Pacific predictor. The East China Sea is the only region where every species fell.
-- In the falling regions, sulphate accounts for a significant part of the decline: −0.58 ± 0.47 (NE Pacific) and −0.54 ± 0.38 (East China Sea). That's 15–25 %. CAMS gives a larger East China Sea anthropogenic term (−1.92 ± 0.82).
+- In the falling regions, sulphate accounts for a significant part of the decline: −0.58 ± 0.47 (NE Pacific) and −0.54 ± 0.38 (East China Sea). That's 15–25 %. With CAMS, the East China Sea anthropogenic term in Terra droplet number is larger (−1.92 ± 0.82, against −0.49 ± 0.57 with MERRA-2 on the same Terra data); the CAMS run used Terra only.
 - In the northern Indian Ocean the anthropogenic droplet-number terms are zero: −0.02 ± 0.12 and −0.04 ± 0.10 (A.13).
 - **Caveat:** month-to-month sensitivities explain only part of the falling-region declines, so this is an upper-bound argument for the rising regions, not a full attribution of the falling ones.
 
 ### 4.4 Why: droplet-number susceptibility is near zero in the region's polluted air
 - **Measure:** per-cell S = d ln N_d / d ln AOD_anthro (Aqua, weather-controlled, detrended).
-- **Pooled across regions,** S falls steadily with background AOD, from +0.13 to −0.04 (MERRA-2) and from +0.19 to −0.07 (CAMS) (Fig. `fig_susceptibility_anthro`; A.14).
+- **Pooled across regions,** S falls with background AOD, from +0.13 to −0.04 (MERRA-2) and from +0.18 to −0.07 (CAMS) between the cleanest and most polluted octiles (Fig. `fig_susceptibility_anthro`; A.14).
 - **Regional medians** (Table 5):
 
 | | NE Pacific | East China Sea | Arabian Sea | Bay of Bengal |
 |---|---|---|---|---|
-| MERRA-2 | +0.13 | +0.14 | −0.04 | −0.07 |
+| MERRA-2 | +0.09 | +0.14 | −0.04 | −0.07 |
 | CAMS | +0.16 | +0.16 | −0.05 | −0.08 |
 
 - **The East China Sea, at similar AOD, keeps a positive response.** So the northern Indian Ocean's low susceptibility isn't loading alone.
@@ -244,7 +244,7 @@ Observed Aqua droplet-number trends are in Table 3, and their spatial pattern, a
 **Figure 2** (`fig_paper_cloudtype`). Anthropogenic-aerosol (sulphate + BC + OC) contribution to the trend in low-, mid- and high-cloud reflection, by region.
 - Model: headline A_types_air_dt, with MERRA-2 (blue) and CAMS EAC4 (orange) aerosol.
 - Error bars: 2σ including the year-block bootstrap of the fitted sensitivities.
-- Low-cloud terms over the northern Indian Ocean are within ±0.05 W m⁻² per decade with both reanalyses. High-cloud terms disagree in sign between them.
+- Low-cloud terms over the northern Indian Ocean are +0.00 to +0.03 W m⁻² per decade, below 0.07 at 2σ, with both reanalyses. High-cloud terms disagree in sign between them.
 
 **Figure 3** (`fig_susceptibility_anthro`). Droplet-number susceptibility S = d ln N_d / d ln AOD_anthro against each cell's background anthropogenic AOD (MERRA-2, 2003–2022 mean).
 - S per 1° ocean cell: Aqua-MODIS, weather-controlled, detrended. Dots are coloured by region.
@@ -261,7 +261,7 @@ Observed Aqua droplet-number trends are in Table 3, and their spatial pattern, a
 ## 5. Discussion
 
 **5.1 What the null means.** The northern Indian Ocean is the main ocean region where aerosol rose over the satellite era, so it tests whether the cloud response to aerosol is symmetric.
-- **Bound:** the response in low-cloud reflection is below ±0.05 W m⁻² per decade (2σ), against a sulphate AOD rise of about 16 % per decade.
+- **Bound:** the response in low-cloud reflection is below 0.07 W m⁻² per decade (2σ upper bound), against a sulphate AOD rise of about 16 % per decade.
 - **For comparison:** the NE Pacific, where sulphate fell about 8 % per decade, has a sulphate term of −0.27 ± 0.36. That's not significant either, but it's an order of magnitude larger as a central estimate, and droplet number there fell significantly.
 - **Two readings of the asymmetry:**
   1. Saturation: extra aerosol does little in already-polluted air, so a rise adds little brightening. A fall from moderate loading does more.
@@ -274,7 +274,7 @@ Observed Aqua droplet-number trends are in Table 3, and their spatial pattern, a
   - BC or dust share;
   - the monsoon season;
   - a broken-cloud retrieval artefact.
-  It also appears in a second, diurnally sampled retrieval.
+  It also appears in a second, diurnally sampled retrieval over 2003–2014, though not over the full record (Sect. 4.4).
 - **Agreement with prior work:** a near-zero-to-negative droplet response over the region is consistent with the reversed aerosol indirect effect reported by Jose et al. (2020). They found droplet radius increasing with aerosol, as our MERRA-2 radius term does (+0.05 ± 0.02 µm per decade). Our CAMS check shows the winter part of that signal is reanalysis-dependent, though.
 - **Remaining candidates:**
   - meteorological co-variation that the controls miss: polluted months are dry continental-outflow months;
@@ -306,7 +306,7 @@ Including the uncertainty of the fitted sensitivities (year-block bootstrap) wid
 
 ## 6. Conclusions
 
-Over 2003–2024, aerosol optical depth over the northern Indian Ocean rose by about 10–17 % per decade by species. No associated change in low-cloud reflection is detectable: the anthropogenic-aerosol contribution is within ±0.05 W m⁻² per decade (2σ) over the Arabian Sea and the Bay of Bengal. This holds across two aerosol reanalyses, linear and gradient-boosted models, and detrended and undetrended fits, with the uncertainty of the fitted sensitivities included.
+Over 2003–2024, anthropogenic aerosol over the northern Indian Ocean rose: Arabian Sea sulphate aerosol optical depth by about 16 % per decade. No associated change in low-cloud reflection is detectable: the anthropogenic-aerosol contribution is +0.00 to +0.03 W m⁻² per decade over the Arabian Sea and the Bay of Bengal, with a 2σ upper bound of 0.07. This holds across two aerosol reanalyses, linear and gradient-boosted models, and detrended and undetrended fits, with the uncertainty of the fitted sensitivities included.
 
 The negative sulphate signal that a sulphate-only cloud-controlling-factor model returns for total cloud reflection here is confounding. It sits in high cloud, is partly wet scavenging, is not significant once sensitivity uncertainty is counted, and reverses sign between reanalyses.
 
