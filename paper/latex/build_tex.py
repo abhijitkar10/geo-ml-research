@@ -101,7 +101,7 @@ def to_tex(md):
     tex = re.sub(r"\\begin\{minipage\}\[b\]\{\\linewidth\}\\raggedright\n?(.*?)\\end\{minipage\}", r"\1", tex, flags=re.S)
     def colspec(m):  # pandoc's wide-table widths -> plain p{} columns of equal width
         n = m.group(0).count(">{")
-        return "\\begin{tabular}{" + ("p{%.2f\\textwidth}" % (0.9 / n)) * n + "}"
+        return "\\begin{tabular}{" + ("p{%.3f\\textwidth}" % (0.86 / n)) * n + "}"
     tex = re.sub(r"\\begin\{tabular\}\{@\{\}\s*(?:>\{[^\n]*?\}p\{[^\n]*?\}\s*)+@\{\}\}", colspec, tex)
     tex = re.sub(r"\{\\def\\LTcaptype\{none\}[^\n]*\n", "", tex)
     tex = re.sub(r"\\end\{tabular\}\n\}", r"\\end{tabular}", tex)
@@ -148,8 +148,17 @@ def flatten(md):
     return " ".join(l for l in lines if l)
 
 
+YEAR = r"(\d{4}[a-z]?)"  # 2026a, 2026b: several data sets from one archive in one year
+
+
+def first_author(authors):
+    """Surname of the first author; an organisation's acronym if given as 'Name (ACR)'; else the organisation."""
+    a = re.sub(r"[^,()]*\(([A-Z0-9]+)\)", r"\1", authors)
+    return re.split(r",| and ", a)[0].strip()
+
+
 def bib_key(authors, year):
-    return re.sub(r"\W", "", authors.split(",")[0].strip().lower()) + year
+    return re.sub(r"\W", "", first_author(authors).lower()) + year
 
 
 def cite_keys(refs_md):
@@ -157,20 +166,21 @@ def cite_keys(refs_md):
     keys = {}
     for ref in [r.strip() for r in refs_md.strip().split("\n\n") if r.strip()]:
         authors = ref.split(":", 1)[0]
-        year = re.search(r"(\d{4})\.?(?:\s*\[[^\]]*\])?$", ref).group(1)
-        keys[(authors.split(",")[0].strip(), year)] = bib_key(authors, year)
+        year = re.search(YEAR + r"\.?(?:\s*\[[^\]]*\])?$", ref).group(1)
+        keys[(first_author(authors), year)] = bib_key(authors, year)
     return keys
 
 
 def citations(md, keys):
     """Plain 'Smith et al., 2009' -> \\citealp{smith2009}; narrative 'Smith et al. (2009)' -> \\citet{smith2009}.
     Only names that exist in the reference list are touched, so ordinary prose can't be mistaken for a citation."""
-    name = r"(CERES Science Team|[A-Z][\w\-]+)(?: et al\.| and [A-Z][\w\-]+)?"
+    orgs = sorted({n for n, _ in keys if " " in n}, key=len, reverse=True)  # multi-word organisation authors
+    name = r"(" + "".join(re.escape(o) + "|" for o in orgs) + r"[A-Z][\w\-]+)(?: et al\.| and [A-Z][\w\-]+)?"
     def known(m, cmd):
         k = keys.get((m.group(1), m.group(2)))
         return f"\\{cmd}{{{k}}}" if k else m.group(0)
-    md = re.sub(name + r" \((\d{4})\)", lambda m: known(m, "citet"), md)
-    md = re.sub(name + r",\s(\d{4})", lambda m: known(m, "citealp"), md)
+    md = re.sub(name + r" \(" + YEAR + r"\)", lambda m: known(m, "citet"), md)
+    md = re.sub(name + r",\s" + YEAR + r"\b", lambda m: known(m, "citealp"), md)
     return md
 
 
@@ -179,12 +189,12 @@ def bibliography(refs_md):
     for ref in [r.strip() for r in refs_md.strip().split("\n\n") if r.strip()]:
         ref = re.sub(r"\s*\[verify[^\]]*\]", "", ref)
         authors, rest = ref.split(":", 1)
-        year = re.search(r"(\d{4})\.?$", ref).group(1)
-        first = authors.split(",")[0].strip()
-        n_auth = authors.count(" and ") + authors.count(".,") + 1
-        short = first if "Team" in authors else (f"{first} and {authors.split(' and ')[1].split(',')[0].strip()}"
-                                                 if n_auth == 2 and " and " in authors else
-                                                 first if n_auth == 1 else f"{first} et~al.")
+        year = re.search(YEAR + r"\.?$", ref).group(1)
+        first = first_author(authors)
+        a = re.sub(r"[^,()]*\(([A-Z0-9]+)\)", r"\1", authors)  # 'Office (GMAO)' -> 'GMAO'
+        n_auth = 1 if not re.search(r"\b[A-Z]\.", a) else a.count(" and ") + a.count(".,") + 1  # no initials: organisation
+        short = (f"{first} and {a.split(' and ')[1].split(',')[0].strip()}" if n_auth == 2 and " and " in a else
+                 first if n_auth == 1 else f"{first} et~al.")
         key = bib_key(authors, year)
         items.append(f"\\bibitem[{short}({year})]{{{key}}}\n{to_tex(ref).strip()}")
     return "\\begin{thebibliography}{}\n\n" + "\n\n".join(items) + "\n\n\\end{thebibliography}"
@@ -297,6 +307,14 @@ def selfcheck():
     assert list_breaks("Intro:\n- a\n- b") == "Intro:\n\n- a\n- b"
     assert list_breaks("- a\n  - b\n- c") == "- a\n  - b\n- c"
     assert flatten("Trends.\n- Top: a.\n- Bottom: b.") == "Trends. Top: a. Bottom: b."
+    b = bibliography("Global Modeling and Assimilation Office (GMAO) and Pawson, S.: M, A [data set], 2015.\n\n"
+                     "Copernicus Climate Change Service: E, C [data set], 2023b.\n\nDoelling, D.: C, N [data set], 2026a.")
+    assert "\\bibitem[GMAO and Pawson(2015)]{gmao2015}" in b, b
+    assert "\\bibitem[Copernicus Climate Change Service(2023b)]{copernicusclimatechangeservice2023b}" in b, b
+    assert "\\bibitem[Doelling(2026a)]{doelling2026a}" in b, b
+    k2 = {("GMAO", "2015"): "gmao2015", ("Copernicus Climate Change Service", "2023b"): "c2023b", ("Doelling", "2026a"): "d"}
+    assert citations("(GMAO and Pawson, 2015; Copernicus Climate Change Service, 2023b; Doelling, 2026a)", k2) == \
+        "(\\citealp{gmao2015}; \\citealp{c2023b}; \\citealp{d})"
     k = {("Loeb", "2021"): "loeb2021", ("Wood", "2006"): "wood2006", ("Jose", "2020"): "jose2020"}
     assert citations("(Loeb et al., 2021; EIS; Wood and Bretherton, 2006) and Jose et al. (2020); Bay of Bengal, 2003", k) == \
         "(\\citealp{loeb2021}; EIS; \\citealp{wood2006}) and \\citet{jose2020}; Bay of Bengal, 2003"

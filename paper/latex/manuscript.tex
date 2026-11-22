@@ -67,7 +67,7 @@ All fields are monthly, 2003-01 to 2025-12 (276 months), on the CERES 1$^{\circ}
 \begin{table*}[t]
 \caption{Data sets used.}
 \label{tab:1}
-\begin{tabular}{p{0.30\textwidth}p{0.30\textwidth}p{0.30\textwidth}}
+\begin{tabular}{p{0.287\textwidth}p{0.287\textwidth}p{0.287\textwidth}}
 \tophline
 Quantity
  & Source
@@ -75,16 +75,16 @@ Quantity
  \\
 \middlehline
 \bottomhline
-Sunlight reflected by low (1000--680 hPa), mid (680--440) and high (\textless440) clouds: $\Sigma$ over 42 cloud types of amount $\times$ (cloudy SW $-$ clear SW), as in Ceppi et al.~(2026, eq. A1) & CERES FluxByCldTyp Ed4A (Terra+Aqua, to 2023-02), continued with NOAA-20 VIIRS Ed1B & targets \texttt{cre\_low}, \texttt{cre\_mid}, \texttt{cre\_high} \\
-Sunlight reflected by clouds, \texttt{toa\_sw\_all\_mon\ $-$\ toa\_sw\_clr\_c\_mon} (W m$^{-2}$; positive = more reflection, so a falling trend = darker clouds) & CERES EBAF-TOA Ed4.2.1 (\citealp{loeb2018}) & target \texttt{cre} \\
-Low cloud cover (\%) & ERA5 single levels (\citealp{hersbach2020}) & target \texttt{lcc} (reanalysis) \\
-Low-layer (700 hPa--surface) cloud amount (\%) and liquid droplet radius at 3.7 $\mu$m ($\mu$m) & CERES SSF1deg-Month Ed4A, Terra-MODIS; Aqua-MODIS as a cross-check & targets \texttt{lowcf}, \texttt{reff} \\
-SST, 2 m temperature and dewpoint, surface pressure, 10 m wind & ERA5 single levels & predictors \\
-Temperature, relative humidity, vertical velocity at 700 hPa; RH at 850 and 1000 hPa; u, v at 850 and 1000 hPa; q at 925 hPa & ERA5 pressure levels & predictors \\
-550 nm extinction AOD of sulphate, black carbon, dust, organic carbon, sea salt & MERRA-2 M2TMNXAER v5.12.4 (\citealp{gelaro2017}) & aerosol predictors (log$_{10}$, floored at 10$^{-4}$) \\
-AOD by species (sulphate, BC, organic matter, dust, sea salt), 2003--2024 & CAMS EAC4 reanalysis (\citealp{inness2019}) & second aerosol source (robustness) \\
-Liquid droplet number, N\_d = 1.37$\times$10$^{-5}$ $\tau$\^{}0.5 r\_e\^{}$-$2.5 (adiabatic, \citealp{grosvenor2018}) & CERES SSF1deg low layer, Aqua-MODIS (Terra drifts) & target \texttt{nd\_aqua}; susceptibility \\
-Ship SO$_{2}$ emissions, 2010--2022 & EDGAR v8.1 & IMO 2020 lane mask \\
+Sunlight reflected by low (1000--680 hPa), mid (680--440) and high (\textless440) clouds: $\Sigma$ over 42 cloud types of amount $\times$ (cloudy SW $-$ clear SW), as in Ceppi et al.~(2026, eq. A1) & CERES FluxByCldTyp-Month Ed4A (Terra+Aqua, to 2023-02; \citealp{doelling2026d}), continued with NOAA-20 VIIRS Ed1B (\citealp{doelling2026e}) & targets \texttt{cre\_low}, \texttt{cre\_mid}, \texttt{cre\_high} \\
+Sunlight reflected by clouds, \texttt{toa\_sw\_all\_mon\ $-$\ toa\_sw\_clr\_c\_mon} (W m$^{-2}$; positive = more reflection, so a falling trend = darker clouds) & CERES EBAF-TOA Ed4.2.1 (\citealp{loeb2018}; \citealp{doelling2026a}) & target \texttt{cre} \\
+Low cloud cover (\%) & ERA5 monthly means, single levels (\citealp{hersbach2020}; \citealp{copernicusclimatechangeservice2023a}) & target \texttt{lcc} (reanalysis) \\
+Low-layer (700 hPa--surface) cloud amount (\%) and liquid droplet radius at 3.7 $\mu$m ($\mu$m) & CERES SSF1deg-Month Ed4A, Terra-MODIS (\citealp{doelling2026b}); Aqua-MODIS as a cross-check (\citealp{doelling2026c}) & targets \texttt{lowcf}, \texttt{reff} \\
+SST, 2 m temperature and dewpoint, surface pressure, 10 m wind & ERA5 monthly means, single levels (\citealp{copernicusclimatechangeservice2023a}) & predictors \\
+Temperature, relative humidity, vertical velocity at 700 hPa; RH at 850 and 1000 hPa; u, v at 850 and 1000 hPa; q at 925 hPa & ERA5 monthly means, pressure levels (\citealp{copernicusclimatechangeservice2023b}) & predictors \\
+550 nm extinction AOD of sulphate, black carbon, dust, organic carbon, sea salt & MERRA-2 M2TMNXAER v5.12.4 (\citealp{gelaro2017}; \citealp{gmao2015}) & aerosol predictors (log$_{10}$, floored at 10$^{-4}$) \\
+AOD by species (sulphate, BC, organic matter, dust, sea salt), 2003--2024 & CAMS EAC4 reanalysis, monthly means (\citealp{inness2019}; \citealp{copernicusatmospheremonitoringservice2020}) & second aerosol source (robustness) \\
+Liquid droplet number, N\_d = 1.37$\times$10$^{-5}$ $\tau$\^{}0.5 r\_e\^{}$-$2.5 (adiabatic, \citealp{grosvenor2018}) & CERES SSF1deg-Month Ed4A low layer, Aqua-MODIS (Terra drifts; \citealp{doelling2026c}) & target \texttt{nd\_aqua}; susceptibility \\
+Ship SO$_{2}$ emissions, 2010--2022 & EDGAR v8.1 (\citealp{crippa2026}) & IMO 2020 lane mask \\
 \end{tabular}
 \end{table*}
 
@@ -285,7 +285,7 @@ All series are deseasonalised by removing each cell's monthly climatology. That 
 \begin{table*}[t]
 \caption{Anthropogenic-aerosol (sulphate + BC + OC) contribution to the 2003--2024 trend in low-cloud reflection (W m$^{-2}$ per decade, 2$\sigma$) across model variants and aerosol datasets. $\dagger$ marks errors that include the year-block bootstrap of the fitted sensitivities.}
 \label{tab:2}
-\begin{tabular}{p{0.23\textwidth}p{0.23\textwidth}p{0.23\textwidth}p{0.23\textwidth}}
+\begin{tabular}{p{0.215\textwidth}p{0.215\textwidth}p{0.215\textwidth}p{0.215\textwidth}}
 \tophline
 model
  & aerosol
@@ -612,18 +612,18 @@ For attributing Earth's recent darkening, the response of low clouds to aerosol 
 
 \begin{itemize}
 \item
-  CERES EBAF-TOA Ed4.2.1, SSF1deg-Month Ed4A (Terra and Aqua), FluxByCldTyp-Month Ed4A (Terra--Aqua) and NOAA-20 Ed1B, and SYN1deg-Month Ed4B, from the NASA Langley Atmospheric Science Data Center (https://ceres.larc.nasa.gov).
+  CERES products from the NASA Langley Atmospheric Science Data Center: EBAF-TOA Ed4.2.1 (\citealp{doelling2026a}); the Terra and Aqua SSF1deg-Month Ed4A (\citealp{doelling2026b}; \citealp{doelling2026c}); the Terra--Aqua FluxByCldTyp-Month Ed4A and its NOAA-20 Ed1B continuation (\citealp{doelling2026d}; \citealp{doelling2026e}); and SYN1deg-Month Ed4B (\citealp{doelling2026f}).
 \item
-  MERRA-2 aerosol diagnostics (M2TMNXAER and the column-mass collections), from the NASA GES DISC.
+  MERRA-2 M2TMNXAER v5.12.4 aerosol optical depths and surface mass concentrations (\citealp{gmao2015}), from the NASA Goddard Earth Sciences Data and Information Services Center.
 \item
-  ERA5 monthly single-level and pressure-level fields, from the Copernicus Climate Data Store.
+  ERA5 monthly means on single levels and on pressure levels (\citealp{copernicusclimatechangeservice2023a}; \citealp{copernicusclimatechangeservice2023b}), from the Copernicus Climate Data Store.
 \item
-  CAMS EAC4 aerosol optical depths, from the Copernicus Atmosphere Data Store.
+  CAMS EAC4 monthly aerosol optical depths (\citealp{copernicusatmospheremonitoringservice2020}), from the Copernicus Atmosphere Data Store.
 \item
-  EDGAR v8.1 shipping SO$_{2}$ emissions, from the European Commission Joint Research Centre.
+  EDGAR v8.1 shipping SO$_{2}$ emissions (\citealp{crippa2026}), from the European Commission Joint Research Centre.
 \end{itemize}
 
-{[}Author: add the dataset DOIs to the reference list, and deposit the derived regional time series and plotting data used for each figure on Zenodo.{]}}
+The derived regional time series, per-cell results and plotting data for each figure are in the project repository (its results folders) and will be archived on Zenodo with the code. {[}Author: insert the Zenodo DOI.{]}}
 
 \authorcontribution{{[}Author: describe each author's contribution, e.g.~using the CRediT taxonomy.{]}}
 
@@ -637,17 +637,50 @@ We thank the CERES, GMAO (MERRA-2), ECMWF/Copernicus (ERA5, CAMS) and EDGAR team
 
 \begin{thebibliography}{}
 
+\bibitem[Ceppi et~al.(2026)]{ceppi2026}
+Ceppi, P., Wilson Kemsley, S., Andersen, H., Andrews, T., Kramer, R. J., Nowack, P., Wall, C. J., and Zelinka, M. D.: Emerging low-cloud feedback and adjustment in global satellite observations, Atmos. Chem. Phys., 26, 4153--4171, https://doi.org/10.5194/acp-26-4153-2026, 2026.
+
 \bibitem[CERES Science Team(2025)]{ceresscienceteam2025}
 CERES Science Team: CERES SYN1deg Edition 4A Data Quality Summary, NASA Langley Research Center, https://ceres.larc.nasa.gov/documents/DQ\_summaries/CERES\_SYN1deg\_Ed4A\_DQS.pdf, 2025.
 
-\bibitem[Ceppi et~al.(2026)]{ceppi2026}
-Ceppi, P., Wilson Kemsley, S., Andersen, H., Andrews, T., Kramer, R. J., Nowack, P., Wall, C. J., and Zelinka, M. D.: Emerging low-cloud feedback and adjustment in global satellite observations, Atmos. Chem. Phys., 26, 4153--4171, https://doi.org/10.5194/acp-26-4153-2026, 2026.
+\bibitem[Copernicus Atmosphere Monitoring Service(2020)]{copernicusatmospheremonitoringservice2020}
+Copernicus Atmosphere Monitoring Service: CAMS global reanalysis (EAC4) monthly averaged fields, Copernicus Atmosphere Monitoring Service (CAMS) Atmosphere Data Store {[}data set{]}, https://doi.org/10.24381/fd75fff2, 2020.
+
+\bibitem[Copernicus Climate Change Service(2023b)]{copernicusclimatechangeservice2023b}
+Copernicus Climate Change Service: ERA5 monthly averaged data on pressure levels from 1940 to present, Copernicus Climate Change Service (C3S) Climate Data Store (CDS) {[}data set{]}, https://doi.org/10.24381/cds.6860a573, 2023b.
+
+\bibitem[Copernicus Climate Change Service(2023a)]{copernicusclimatechangeservice2023a}
+Copernicus Climate Change Service: ERA5 monthly averaged data on single levels from 1940 to present, Copernicus Climate Change Service (C3S) Climate Data Store (CDS) {[}data set{]}, https://doi.org/10.24381/cds.f17050d7, 2023a.
+
+\bibitem[Crippa et~al.(2026)]{crippa2026}
+Crippa, M., Guizzardi, D., Pagani, F., Banja, M., Muntean, M., Schaaf, E., Becker, W., Monforti Ferrario, F., Quadrelli, R., Risquez Martin, A., Grassi, G., Rossi, S., Brandao De Melo, J., Jacome Felix Oom, D., Branco, A., San-Miguel, J., and Vignati, E.: EDGAR v8.1 Global Air Pollutant Emissions, European Commission, Joint Research Centre {[}data set{]}, https://doi.org/10.2905/JRC.E1ZGQER, 2026.
 
 \bibitem[Diamond(2023)]{diamond2023}
 Diamond, M. S.: Detection of large-scale cloud microphysical changes within a major shipping corridor after implementation of the International Maritime Organization 2020 fuel sulfur regulations, Atmos. Chem. Phys., 23, 8259--8269, https://doi.org/10.5194/acp-23-8259-2023, 2023.
 
+\bibitem[Doelling(2026a)]{doelling2026a}
+Doelling, D.: CERES Energy Balanced and Filled (EBAF) TOA Monthly means data in netCDF Edition4.2.1, NASA Langley Atmospheric Science Data Center DAAC {[}data set{]}, https://doi.org/10.5067/TERRA-AQUA-NOAA20/CERES/EBAF-TOA\_L3B004.2.1, 2026a.
+
+\bibitem[Doelling(2026e)]{doelling2026e}
+Doelling, D.: CERES Monthly Daytime Mean Regionally Averaged NOAA-20 TOA Fluxes and Associated Cloud Properties Stratified by Optical Depth and Effective Pressure Edition1B, NASA Langley Atmospheric Science Data Center DAAC {[}data set{]}, https://doi.org/10.5067/NOAA20/CERES/FLUXBYCLDTYP-MONTH\_L3.001B, 2026e.
+
+\bibitem[Doelling(2026d)]{doelling2026d}
+Doelling, D.: CERES Monthly Daytime Mean Regionally Averaged Terra and Aqua TOA Fluxes and Associated Cloud Properties Stratified by Optical Depth and Effective Pressure Edition4A, NASA Langley Atmospheric Science Data Center DAAC {[}data set{]}, https://doi.org/10.5067/Terra-Aqua/CERES/FLUXBYCLDTYP-MONTH\_L3.004A, 2026d.
+
+\bibitem[Doelling(2026c)]{doelling2026c}
+Doelling, D.: CERES Time-Interpolated TOA Fluxes, Clouds and Aerosols Monthly Aqua Edition4A, NASA Langley Atmospheric Science Data Center DAAC {[}data set{]}, https://doi.org/10.5067/AQUA/CERES/SSF1DEGMONTH\_L3.004A, 2026c.
+
+\bibitem[Doelling(2026b)]{doelling2026b}
+Doelling, D.: CERES Time-Interpolated TOA Fluxes, Clouds and Aerosols Monthly Terra Edition4A, NASA Langley Atmospheric Science Data Center DAAC {[}data set{]}, https://doi.org/10.5067/TERRA/CERES/SSF1DEGMONTH\_L3.004A, 2026b.
+
+\bibitem[Doelling(2026f)]{doelling2026f}
+Doelling, D.: CERES and GEO-Enhanced TOA, Within-Atmosphere and Surface Fluxes, Clouds and Aerosols Monthly Terra-Aqua-NOAA20 Edition4B, NASA Langley Atmospheric Science Data Center DAAC {[}data set{]}, https://doi.org/10.5067/TERRA-AQUA-NOAA20/CERES/SYN1DEGMONTH\_L3.004B, 2026f.
+
 \bibitem[Gelaro et~al.(2017)]{gelaro2017}
 Gelaro, R., McCarty, W., Suárez, M. J., Todling, R., Molod, A., Takacs, L., Randles, C. A., Darmenov, A., Bosilovich, M. G., Reichle, R., Wargan, K., Coy, L., Cullather, R., Draper, C., Akella, S., Buchard, V., Conaty, A., da Silva, A. M., Gu, W., Kim, G.-K., Koster, R., Lucchesi, R., Merkova, D., Nielsen, J. E., Partyka, G., Pawson, S., Putman, W., Rienecker, M., Schubert, S. D., Sienkiewicz, M., and Zhao, B.: The Modern-Era Retrospective Analysis for Research and Applications, Version 2 (MERRA-2), J. Climate, 30, 5419--5454, https://doi.org/10.1175/JCLI-D-16-0758.1, 2017.
+
+\bibitem[GMAO(2015)]{gmao2015}
+Global Modeling and Assimilation Office (GMAO): MERRA-2 tavgM\_2d\_aer\_Nx: 2d, Monthly mean, Time-averaged, Single-Level, Assimilation, Aerosol Diagnostics V5.12.4, NASA Goddard Earth Sciences Data and Information Services Center (GES DISC) {[}data set{]}, https://doi.org/10.5067/FH9A0MLJPC7N, 2015.
 
 \bibitem[Goessling et~al.(2025)]{goessling2025}
 Goessling, H. F., Rackow, T., and Jung, T.: Recent global temperature surge intensified by record-low planetary albedo, Science, 387, 68--73, https://doi.org/10.1126/science.adq7280, 2025.
