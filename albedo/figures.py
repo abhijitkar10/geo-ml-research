@@ -74,6 +74,35 @@ def terra_aqua(plt):
     return fig, "terra_aqua"
 
 
+def graphical_abstract(plt):
+    """Fig. 2 reduced to its message: low vs high cloud, rising vs falling regions (same A_types_air_dt data)."""
+    colours = {"MERRA-2": "#0072B2", "CAMS EAC4": "#E69F00"}  # Okabe-Ito
+    titles = {"cre_low": "Low cloud: no aerosol signal where aerosol rose",
+              "cre_high": "High cloud: sign flips between reanalyses"}
+    fig, axes = plt.subplots(1, 2, figsize=(8, 3.6), sharey=True)
+    for ax, layer in zip(axes, titles):
+        ax.axvspan(-0.5, 1.5, color="#f4e6d8", zorder=0)
+        ax.axvspan(1.5, 3.5, color="#dde8f2", zorder=0)
+        for k, (src, path) in enumerate({"MERRA-2": OUT, "CAMS EAC4": ROOT / "results_cams"}.items()):
+            d = {r["region"]: (float(r["trend"]), float(r["err"])) for r in csv.DictReader(open(path / "trends_A.csv"))
+                 if r["model"] == "A_types_air_dt" and r["term"] == "anthro" and r["target"] == layer}
+            y, e = zip(*[d[r] for r in REGIONS])
+            ax.errorbar([i + (k - 0.5) * 0.28 for i in range(4)], y, yerr=e, fmt="o", capsize=3,
+                        color=colours[src], label=src)
+        ax.axhline(0, color="grey", lw=0.6)
+        ax.set_xlim(-0.5, 3.5)
+        ax.set_ylim(-1.25, 1.05)
+        ax.set_xticks(range(4), [LABEL[r].replace(" ", "\n", 1) for r in REGIONS], fontsize=8)
+        ax.set_title(titles[layer], fontsize=9.5)
+        for x, txt, c in [(0.5, "aerosol rising", "#8a5a2b"), (2.5, "aerosol falling", "#2b5a8a")]:
+            ax.text(x, 0.98, txt, ha="center", va="top", fontsize=8, color=c, transform=ax.get_xaxis_transform())
+    axes[0].set_ylabel("Anthropogenic-aerosol contribution\n(W m$^{-2}$ per decade, 2$\\sigma$)", fontsize=9)
+    axes[0].legend(fontsize=8, loc="lower left")
+    fig.suptitle("Rising South Asian aerosol, 2003–2024: no detectable brightening of northern Indian Ocean "
+                 "low clouds", fontsize=10.5)
+    return fig, "graphical_abstract"
+
+
 def label_panels(axes):
     """ACP style: (a), (b), ... in each panel's top-left corner."""
     import string
@@ -110,4 +139,13 @@ def main():
 
 if __name__ == "__main__":
     import sys
-    export() if sys.argv[1:] == ["export"] else main()
+    if sys.argv[1:] == ["graphical"]:  # -> paper/figures/graphical_abstract.png (optional ACP graphical abstract)
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        fig, name = graphical_abstract(plt)
+        fig.tight_layout()
+        fig.savefig(ROOT.parent / "paper" / "figures" / f"{name}.png", dpi=300)
+        print("wrote", name)
+    else:
+        export() if sys.argv[1:] == ["export"] else main()
